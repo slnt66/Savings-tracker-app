@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Tracker</title>
+</head>
+<body>
+    <header>
+        <img aria-hidden="true" src="" alt="">         <!-- main icon -->
+        <h1>Savings Tracker</h1>
+        <button type="button" class="btn btn_primary">New goal</button>
+    </header>
+
+    <main>
+        <section class="user_statistics">
+            <div class="stat_card bg-gradient-orange">
+                <span>Total savings</span>
+                <data value="0" id="total_savings">0$</data>
+            </div>
+            <div class="stat_card bg-deepgray">
+                <span>Active goals</span>
+                <data value="0" id="active_goals">0</data>
+            </div>
+            <div class="stat_card bg-deepgray">
+                <span>Goals completed</span>
+                <data value="0" id="goals_completed">0</data>
+            </div>
+            <div class="stat_card bg-deepgray">
+                <span>Monthly deposits</span>
+                <div class="yearly_stats">
+
+                </div>
+            </div>
+        </section>
+
+        <section class="user_goals">
+            <div class="section_header">
+                <h2>Your goals</h2>
+                <div>
+                    <button type="button" class="btn btn_secondary">Filters</button>
+                    <button type="button" class="btn btn_secondary">Sort by</button>
+                </div>
+            </div>
+            <div class="goals-list">
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
