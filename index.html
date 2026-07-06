@@ -4,33 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savings Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="colors.css">
 </head>
 <body>
     <header>
-        <img aria-hidden="true" src="" alt="">         <!-- main icon -->
-        <h1>Savings Tracker</h1>
-        <button type="button" class="btn btn_primary">New goal</button>
+        <a href="/" class="header_link">
+            <img src="/images/logo-small.svg" alt="">
+            <h1>Savings Tracker</h1>       
+        </a>
+        <button type="button" class="btn_primary bg-orange">
+            <img src="./images/icon-plus.svg">
+            <span>New goal</span>
+        </button>
     </header>
 
     <main>
         <section class="user_statistics">
-            <div class="stat_card bg-gradient-orange">
+            <div id="total_savings" class="stat_card bg-gradient-orange">
                 <span>Total savings</span>
-                <data value="0" id="total_savings">0$</data>
+                <data value="0" id="total_savings_data" class="color-white">$11,249.00</data>
             </div>
-            <div class="stat_card bg-deepgray">
+            <div id="active_goals" class="stat_card bg-gradient-gray">
                 <span>Active goals</span>
-                <data value="0" id="active_goals">0</data>
+                <data value="0" id="active_goals_data" class="color-orange">0</data>
             </div>
-            <div class="stat_card bg-deepgray">
+            <div id="goals_completed" class="stat_card bg-gradient-gray">
                 <span>Goals completed</span>
-                <data value="0" id="goals_completed">0</data>
+                <data value="0" id="goals_completed_data" class="color-light-green">0</data>
             </div>
-            <div class="stat_card bg-deepgray">
+            <div id="monthly_deposits" class="stat_card bg-gradient-gray">
+                <!-- test for template -->
                 <span>Monthly deposits</span>
-                <div class="yearly_stats">
-
-                </div>
+                <!-- <div class="yearly_stats">
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$0</data>
+                        <span>Apr</span>
+                    </div>
+                </div> -->
             </div>
         </section>
 
@@ -38,11 +52,17 @@
             <div class="section_header">
                 <h2>Your goals</h2>
                 <div>
-                    <button type="button" class="btn btn_secondary">Filters</button>
-                    <button type="button" class="btn btn_secondary">Sort by</button>
+                    <button type="button" class="btn_secondary bg-gradient-gray">
+                        <img src="./images/icon-filter.svg" alt="">
+                        <span>Filters</span>
+                    </button>
+                    <button type="button" class="btn_secondary bg-gradient-gray">
+                        <img src="./images/icon-sort.svg" alt="">
+                        <span>Sort by</span>
+                    </button>
                 </div>
             </div>
-            <div class="goals-list">
+            <div class="goals_list">
 
             </div>
         </section>

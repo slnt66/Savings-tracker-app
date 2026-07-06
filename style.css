@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+/* ----- global styles--- */
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+a {
+    color: inherit; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
+
+data{
+    font-family: "Bricolage Grotesque", sans-serif;
+}
+
+body{
+    background-color: rgb(10, 10, 10);
+}
+
+main{
+    padding: 2rem 6rem;
+}
+
+header{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid rgba(32, 30, 30, 0.3);
+    padding: 2rem 6rem;
+}
+
+/* ----- header styles ---- */
+.header_link{
+    display: flex;
+    align-items: center;
+}
+.header_link h1{
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    display: inline;
+    color:white;
+    margin-inline-start: 0.5em;
+}
+
+.btn_primary{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1rem 2rem;
+    border-radius: 4rem;
+    gap:0.5rem;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+}
+
+/* ------ user statistics style ----- */
+#total_savings{
+    grid-area: b1;
+}
+#active_goals{
+    grid-area: b2;
+}
+#goals_completed{
+    grid-area: b3;
+}
+#monthly_deposits{
+    grid-area:b4;
+}
+
+.user_statistics{
+    display: grid;
+    gap:1.2rem;
+    grid-template-columns: repeat(4, 1fr);   
+    grid-template-areas: 
+    "b1 b1 b2 b3"
+    "b4 b4 b4 b4";
+}
+
+.stat_card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 1rem;
+    border: 1px solid rgb(146, 146, 146, 0.2);
+    padding: 2rem;
+    min-height: 13rem;
+}
+
+.stat_card span{
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1.5em;
+}
+.stat_card > data {
+    font-size: 4em;
+    font-weight: 600;
+}
+/*  NEED TO FIX!!!!
+.yearly_stats{
+    display: flex;
+}
+.monthly_spendings{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    height:200px;
+}
+.monthly_spendings > data {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: gray;
+}
+.progress_container{
+    width:50px;
+    height:150px;
+}
+.monthly_spendings_progress_bar{
+    height:100%;
+    width:100%;
+    background-color: rgb(253, 89, 24);
+    border-radius: 10px;
+} */
+
+/* ------section header----- */
+.section_header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.section_header h2{
+    font-size: 2rem;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
+
+.btn_secondary{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color:white;
+    padding: 1rem 2rem;
+    border-radius: 4rem;
+    gap:0.5rem;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    border: 1px solid rgb(146, 146, 146, 0.2);
+}
+
+/* -----------user goals --------- */
+.user_goals{
+    margin-top: 3rem;
+}
