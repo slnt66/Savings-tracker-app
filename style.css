@@ -142,6 +142,7 @@ header{
 .section_header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .section_header h2{
@@ -166,4 +167,56 @@ header{
 /* -----------user goals --------- */
 .user_goals{
     margin-top: 3rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------- new goal modal window ------------ */
+.new_goal_modal{
+    position: absolute;
+    z-index: 1000;
+    inset:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease;
+    /* js-changed classes */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_content{
+    width: clamp(300px, 30vw, 720px);
+    padding: 1rem 2rem ;
+    border-radius: 1.2rem;
+}
+
+.form_group{
+    margin-block:20px;
+}
+.form_group label {
+    display: block;
+    margin-bottom: 5px;
+    color:white;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+}
+.form_group input,
+.form_group select,
+.form_group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
 }
