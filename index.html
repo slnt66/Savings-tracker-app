@@ -13,7 +13,7 @@
             <img src="/images/logo-small.svg" alt="">
             <h1>Savings Tracker</h1>       
         </a>
-        <button type="button" class="btn_primary bg-orange">
+        <button type="button" class="btn_primary bg-orange" id="newGoalBtn">
             <img src="./images/icon-plus.svg">
             <span>New goal</span>
         </button>
@@ -22,9 +22,10 @@
     <main>
         <section class="user_statistics">
             <div id="total_savings" class="stat_card bg-gradient-orange">
-                <span>Total savings</span>
-                <data value="0" id="total_savings_data" class="color-white">$11,249.00</data>
+                    <span>Total savings</span>
+                    <data value="0" id="total_savings_data" class="color-white">$11,249.00</data>
             </div>
+
             <div id="active_goals" class="stat_card bg-gradient-gray">
                 <span>Active goals</span>
                 <data value="0" id="active_goals_data" class="color-orange">0</data>
@@ -53,25 +54,38 @@
                 <h2>Your goals</h2>
                 <div>
                     <button type="button" class="btn_secondary bg-gradient-gray">
-                        <img src="./images/icon-filter.svg" alt="">
-                        <span>Filters</span>
-                    </button>
-                    <button type="button" class="btn_secondary bg-gradient-gray">
                         <img src="./images/icon-sort.svg" alt="">
                         <span>Sort by</span>
                     </button>
+                    
+                    <div class="search bg-gradient-gray">
+                        <div class="search-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="7" />
+                                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                            </svg>
+                        </div> 
+                        <input 
+                            type="text" 
+                            class="search_input" 
+                            id="searchInput" 
+                            placeholder="Поиск..." 
+                            autocomplete="off"
+                            spellcheck="false"
+                        />
+                    </div>
                 </div>
             </div>
             <div class="goals_list">
-
+                
             </div>
         </section>
 
-        <section class="new_goal_modal">
+        <section class="new_goal_modal" id="newGoalModal">
             <div class="modal_content bg-gradient-gray"> 
                 <div class="section_header">
-                    <h2>Your goals</h2>
-                    <button type="button" class="btn_secondary bg-gradient-gray">
+                    <h2>New goal</h2>
+                    <button type="button" class="btn_close bg-gradient-gray" id="closeNewGoalModal">
                         &times;
                     </button>
                 </div>
@@ -153,5 +167,8 @@
             </div>
         </section>
     </main>
+    <script src="vanilla-tilt.min.js"></script>
+    <script src="ui.js"></script>
+    
 </body>
 </html>
