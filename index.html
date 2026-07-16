@@ -14,7 +14,7 @@
             <h1>Savings Tracker</h1>       
         </a>
         <button type="button" class="btn_primary bg-orange" id="newGoalBtn">
-            <img src="./images/icon-plus.svg">
+            <img class="icon" src="./images/icon-plus.svg">
             <span>New goal</span>
         </button>
     </header>
@@ -35,9 +35,10 @@
                 <data value="0" id="goals_completed_data" class="color-light-green">0</data>
             </div>
             <div class="stat_card bg-gradient-gray">
-                <!-- test for template -->
+
                 <span>Monthly deposits</span>
-                <!-- <div class="yearly_stats">
+
+                <div class="yearly_stats">
                     <div class="monthly_spendings">
                         <div class="progress_container">
                             <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
@@ -45,20 +46,127 @@
                         <data value="0">$0</data>
                         <span>Apr</span>
                     </div>
-                </div> -->
+
+
+         <!-- ----------- test values-------------- -->
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar" style = "border: 1px solid rgba(146, 146, 146, 0.2); height:30%; "></div>
+                        </div>
+                        <data value="0">$300</data>
+                        <span>May</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar" style = "border: 1px solid rgba(146, 146, 146, 0.2); height:100%; "></div>
+                        </div>
+                        <data value="0">$1400</data>
+                        <span>Jun</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar" style = "border: 1px solid rgba(146, 146, 146, 0.2); height:70%; "></div>
+                        </div>
+                        <data value="0">$700</data>
+                        <span>Jul</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar" style = "border: 1px solid rgba(146, 146, 146, 0.2); height:20%; "></div>
+                        </div>
+                        <data value="0">$200</data>
+                        <span>Aug</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar" style = "border: 1px solid rgba(146, 146, 146, 0.2); height:40%; "></div>
+                        </div>
+                        <data value="0">$400</data>
+                        <span>Sep</span>
+                    </div>
+
+
+
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div style = "border: 1px solid rgba(146, 146, 146, 0.2); height:50%; " class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$470</data>
+                        <span>Oct</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div style = "border: 1px solid rgba(146, 146, 146, 0.2); height:10%; "class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$100</data>
+                        <span>Nov</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$0</data>
+                        <span>Dec</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div style = "border: 1px solid rgba(146, 146, 146, 0.2); height:80%; " class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$1000</data>
+                        <span>Jan</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div style = "border: 1px solid rgba(146, 146, 146, 0.2); height:30%; " class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$300</data>
+                        <span>Feb</span>
+                    </div>
+                    <div class="monthly_spendings">
+                        <div class="progress_container">
+                            <div style = "border: 1px solid rgba(146, 146, 146, 0.2); height:60%; " class="monthly_spendings_progress_bar" id="monthly_vertical_bar"></div>
+                        </div>
+                        <data value="0">$600</data>
+                        <span>Mar</span>
+
+
+
+                    </div>
+                </div>
+                
             </div>
         </section>
-
-        <section class="user_goals">
-            <div class="section_header">
+        <div class="section_header">
                 <h2>Your goals</h2>
-                <div>
-                    <button id="sortByBtn" type="button" class="btn_secondary bg-gradient-gray">
-                        <img src="./images/icon-sort.svg" alt="">
-                        <span>Sort by</span>
-                    </button>
-                    
-                    <div class="search bg-gradient-gray">
+                <div style="display: flex; position: relative;">
+                    <div class="sort_btn">
+                        <div class="sort_window">
+                            <div class="sort_window_head">
+                                <img class="icon" src="./images/icon-sort.svg" alt="">
+                                <span>Sort by</span>
+                            </div>
+                            <div class="list">
+                                <label class="opt">
+                                    <input type="radio" name="sort" value="name-asc">
+                                    <span class="dot"></span> Name (A–Z)
+                                </label>
+                                <label class="opt">
+                                    <input type="radio" name="sort" value="name-desc">
+                                    <span class="dot"></span> Name (Z–A)
+                                </label>
+                                <label class="opt">
+                                    <input type="radio" name="sort" value="new">
+                                    <span class="dot"></span> Newest first
+                                </label>
+                                <label class="opt">
+                                    <input type="radio" name="sort" value="old">
+                                    <span class="dot"></span> Oldest first
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search">
                         <div class="search_icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="7" />
@@ -76,9 +184,27 @@
                     </div>
                 </div>
             </div>
-            <div class="goals_list">
-                
-            </div>
+        <section class="user_goals">
+            
+            
+            <!-- --------- test values ----- -->
+                <div class="stat_card bg-gradient-orange">
+                    <span>Купить мотоблок</span>
+                    <data value="0" id="goals_completed_data" class="color-white">0/10.000$</data>
+                </div>
+                <div class="stat_card bg-gradient-gray">
+                    <span>Продать мотоблок</span>
+                    <data value="0" id="active_goals_data" class="color-orange">0/1</data>
+                </div>
+                <div class="stat_card bg-gradient-gray">
+                    <span>Шаурма</span>
+                    <data value="0" id="active_goals_data" class="color-light-green">1/1</data>
+                </div>
+                <div class="stat_card bg-gradient-gray">
+                    <span>Не придумал</span>
+                    <data value="0" id="active_goals_data" class="color-orange">1.000.000$</data>
+                </div>
+
         </section>
 
         <section class="new_goal_modal" id="newGoalModal">

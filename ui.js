@@ -28,7 +28,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-function pressedEffect(element, callback){
+function pressedEffect(element, callback, delay = 100){
     if(!element.classList.contains('expanded')){
         element.classList.add('pressed');
         
@@ -36,13 +36,46 @@ function pressedEffect(element, callback){
             element.classList.remove('pressed');
             if (typeof callback === 'function') 
                 callback();
-        }, 150); 
+        }, delay); 
     }
 }
+// ----------- SORT BY -------------
+const glass = document.querySelector('.sort_window');
+const header = document.querySelector('.sort_window_head');
+let open = false;
+
+header.addEventListener('click', (e) => {
+    glass.classList.add('pressed');
+        
+    setTimeout(() => {
+        glass.classList.remove('pressed');
+        if (typeof callback === 'function') 
+            callback();
+    }, 150); 
+    
+    e.stopPropagation();
+    open = !open;
+    glass.classList.toggle('open', open);
+});
+
+document.addEventListener('click', () => {
+    if (open) { open = false; glass.classList.remove('open'); }
+});
+
+document.querySelectorAll('.opt input').forEach(r => {
+    r.addEventListener('change', function() {
+        console.log(this.value);
+        setTimeout(() => { open = false; glass.classList.remove('open'); }, 200);
+    });
+});
+
+
 
 searchContainer.addEventListener('click',() => pressedEffect(searchContainer, expandSearch));
-const sortByBtn = document.getElementById('sortByBtn');
-sortByBtn.addEventListener('click', () => pressedEffect(sortByBtn));
+
+// const sortByBtn = document.getElementById('sortByBtn');
+// sortByBtn.addEventListener('click', () => pressedEffect(sortByBtn));
+
 //------- new goal button 
 
 const newGoalBtn = document.getElementById("newGoalBtn");
