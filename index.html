@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savings Tracker</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="colors.css">
 </head>
 <body>
     <header>
@@ -13,7 +12,7 @@
             <img src="/images/logo-small.svg" alt="">
             <h1>Savings Tracker</h1>       
         </a>
-        <button type="button" class="btn_primary bg-orange" id="newGoalBtn">
+        <button type="button" class="btn_primary" id="newGoalBtn">
             <img class="icon" src="./images/icon-plus.svg">
             <span>New goal</span>
         </button>
@@ -21,20 +20,20 @@
 
     <main>
         <section class="user_statistics">
-            <div class="stat_card bg-gradient-orange">
+            <div class="stat_card">
                     <span>Total savings</span>
                     <data value="0" id="total_savings_data" class="color-white">$11,249.00</data>
             </div>
 
-            <div class="stat_card bg-gradient-gray">
+            <div class="stat_card">
                 <span>Active goals</span>
-                <data value="0" id="active_goals_data" class="color-orange">0</data>
+                <data value="0" id="active_goals_data">0</data>
             </div>
-            <div class="stat_card bg-gradient-gray">
+            <div class="stat_card">
                 <span>Goals completed</span>
-                <data value="0" id="goals_completed_data" class="color-light-green">0</data>
+                <data value="0" id="goals_completed_data">0</data>
             </div>
-            <div class="stat_card bg-gradient-gray">
+            <div class="stat_card">
 
                 <span>Monthly deposits</span>
 
@@ -145,7 +144,7 @@
                                 <img class="icon" src="./images/icon-sort.svg" alt="">
                                 <span>Sort by</span>
                             </div>
-                            <div class="list">
+                            <div class="sort_list">
                                 <label class="opt">
                                     <input type="radio" name="sort" value="name-asc">
                                     <span class="dot"></span> Name (A–Z)
@@ -188,30 +187,30 @@
             
             
             <!-- --------- test values ----- -->
-                <div class="stat_card bg-gradient-orange">
+                <div class="stat_card">
                     <span>Купить мотоблок</span>
                     <data value="0" id="goals_completed_data" class="color-white">0/10.000$</data>
                 </div>
-                <div class="stat_card bg-gradient-gray">
+                <div class="stat_card">
                     <span>Продать мотоблок</span>
-                    <data value="0" id="active_goals_data" class="color-orange">0/1</data>
+                    <data value="0" id="active_goals_data">0/1</data>
                 </div>
-                <div class="stat_card bg-gradient-gray">
+                <div class="stat_card">
                     <span>Шаурма</span>
-                    <data value="0" id="active_goals_data" class="color-light-green">1/1</data>
+                    <data value="0" id="active_goals_data">1/1</data>
                 </div>
-                <div class="stat_card bg-gradient-gray">
+                <div class="stat_card">
                     <span>Не придумал</span>
-                    <data value="0" id="active_goals_data" class="color-orange">1.000.000$</data>
+                    <data value="0" id="active_goals_data">1.000.000$</data>
                 </div>
 
         </section>
 
         <section class="new_goal_modal" id="newGoalModal">
-            <div class="modal_content bg-gradient-gray"> 
+            <div class="modal_content"> 
                 <div class="section_header">
                     <h2>New goal</h2>
-                    <button type="button" class="btn_close bg-gradient-gray" id="closeNewGoalModal">
+                    <button type="button" class="btn_close" id="closeNewGoalModal">
                         &times;
                     </button>
                 </div>
@@ -286,7 +285,7 @@
                 </form>
 
 
-                <button type="button" class="btn_primary bg-orange">
+                <button type="button" class="btn_primary">
                     <img src="./images/icon-plus.svg">
                     <span>Add goal</span>
                 </button>
