@@ -206,90 +206,60 @@
 
         </section>
 
-        <section class="new_goal_modal" id="newGoalModal">
-            <div class="modal_content"> 
-                <div class="section_header">
-                    <h2>New goal</h2>
-                    <button type="button" class="btn_close" id="closeNewGoalModal">
-                        &times;
-                    </button>
+        <section class="new_goal_modal">
+            <form action="" class="progress_form">
+                <h2>New goal</h2>
+                <div class="progress_form_container">
+                    <div class="progress_form_progress"></div>
+                    <ol>
+                        <li>Goal title</li>
+                        <li>Target amount</li>
+                        <li>Current amount</li>
+                    </ol>
                 </div>
+                <div class="form_steps_container">
+                    <div class="form_step">
+                        <div class="step_control">
+                            <label for="goal-title">Goal Title *</label>
+                            <input type="text" id="goal-title" required maxlength="100" autocomplete="off" placeholder="New Car">
+                        </div>
+                    
+                        <div class="step_control">
+                            <label for="goal-description">Description</label>
+                            <textarea id="goal-description" autocomplete="off" placeholder="Describe your goal and motivation..."></textarea>
+                        </div>
+                    </div>
 
-                <form action="">
-                    <div class="form_group">
-                    <label for="goal-title">Goal Title *</label>
-                    <input type="text" id="goal-title" required maxlength="100" 
-                           placeholder="New Car">
-                    <div class="error_message"></div>
+                    <div class="form_step">
+                        <div class="step_control">
+                            <label for="goal-target">Target Amount *</label>
+                            <input type="number" id="goal-target" required min="0" step="0.1"  placeholder="0.00" autocomplete="off">
+                        </div>
+
+                        <div class="step_control">
+                            <label for="goal-deadline">Target Date</label>
+                            <input type="date" id="goal-deadline">
+                        </div>
+                    
+                    </div>
+
+                    <div class="form_step">
+                        <div class="step_control">
+                            <label for="goal-current">Current Amount Saved</label>
+                            <input type="number" id="goal-current" min="0" step="0.1" 
+                                placeholder="0.00" value="0">
+
+                            <input type="range" id="goal-slider" min="0" max="100" step="0.1" value="0">
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="form_group">
-                    <label for="goal-target">Target Amount *</label>
-                    <input type="number" id="goal-target" required min="0" step="0.1" 
-                           placeholder="0.00">
-                    <div class="error_message"></div>
+                <div class="controls">
+                    <button type="button" class="btn_secondary" id="prevBtn">Prev</button>
+                    <button type="button" class="btn_secondary" id="nextBtn">Next</button>
+                    <button type="submit" class="btn_secondary" id="submitBtn">Submit</button>
                 </div>
-
-                <div class="form_group">
-                    <label for="goal-current">Current Amount Saved</label>
-                    <input type="number" id="goal-current" min="0" step="0.1" 
-                           placeholder="0.00" value="0">
-                </div>
-
-                <div class="form_group">
-                    <label for="goal-currency">Currency</label>
-                    <select id="goal-currency">
-                        <option value="USD">USD ($)</option>
-                        <option value="EUR">EUR (€)</option>
-                        <option value="GBP">GBP (£)</option>
-                        <option value="RUB">RUB (₽)</option>
-                        <option value="JPY">JPY (¥)</option>
-                    </select>
-                </div>
-
-                <div class="form_group">
-                    <label for="goal-deadline">Target Date</label>
-                    <input type="date" id="goal-deadline">
-                </div>
-
-                <div class="form_group">
-                    <label for="goal-category">Category</label>
-                    <select id="goal-category">
-                        <option value="general">General</option>
-                        <option value="savings">Savings</option>
-                        <option value="investment">Investment</option>
-                        <option value="debt">Debt Repayment</option>
-                        <option value="education">Education</option>
-                        <option value="travel">Travel</option>
-                        <option value="home">Home</option>
-                        <option value="vehicle">Vehicle</option>
-                        <option value="retirement">Retirement</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form_group">
-                    <label for="goal-priority">Priority</label>
-                    <select id="goal-priority">
-                        <option value="high">High</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </div>
-
-                <div class="form_group">
-                    <label for="goal-description">Description</label>
-                    <textarea id="goal-description" 
-                              placeholder="Describe your goal and motivation..."></textarea>
-                </div>
-                </form>
-
-
-                <button type="button" class="btn_primary">
-                    <img src="./images/icon-plus.svg">
-                    <span>Add goal</span>
-                </button>
-            </div>
+            </form>
         </section>
     </main>
     <script src="vanilla-tilt.min.js"></script>
