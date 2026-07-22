@@ -10,6 +10,9 @@ const nextBtn = document.getElementById('nextBtn');
 const submitBtn = document.getElementById('submitBtn');
 const formSteps = document.querySelectorAll('.form_step');
 const formStepsContainer = document.querySelector(".form_steps_container");
+const activeGoals = document.getElementById("active_goals_data");
+const completedGoals = document.getElementById("goals_completed_data");
+const totalSaved = document.getElementById("total_savings_data");
 
 document.documentElement.style.setProperty("--steps", stepIndicators.length);
 
@@ -64,8 +67,7 @@ nextBtn.addEventListener("click", (e) => {
     }
 })
 
-
-// current amount slider
+    // current amount slider
 const current = document.getElementById('goal-current');
 const slider = document.getElementById('goal-slider');
 const target = document.getElementById('goal-target');
@@ -82,22 +84,6 @@ function updateSlider() {
 target.oninput = updateSlider;
 slider.oninput = () => { current.value = slider.value; updateSlider(); };
 current.oninput = updateSlider;
-
-
-
-
-// newGoalBtn.addEventListener('click', () => {
-//     newGoalBtn.classList.add('pressed');
-    
-//     setTimeout(() => {
-//         newGoalBtn.classList.remove('pressed');
-//         newGoalModal.classList.add('active');
-//     }, 100);
-// });
-
-
-
-
 
 newGoalBtn.addEventListener('click', (e) => {
     e.stopPropagation()
@@ -170,6 +156,7 @@ document.addEventListener('keydown', (e) => {
 // ----------- SORT BY -------------
 const sortByWindow = document.querySelector('.sort_window');
 const header = document.querySelector('.sort_window_head');
+
 let open = false;
 
 header.addEventListener('click', (e) => {
@@ -192,7 +179,6 @@ document.addEventListener('click', () => {
 
 document.querySelectorAll('.opt input').forEach(r => {
     r.addEventListener('change', function() {
-        console.log(this.value);
         setTimeout(() => { open = false; sortByWindow.classList.remove('open'); }, 200);
     });
 });
