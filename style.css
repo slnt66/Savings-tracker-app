@@ -35,6 +35,12 @@
 html {
   font-size: var(--font-base); 
 }
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  background: transparent;
+}
 button {
     border: none;
     background: none;
@@ -250,6 +256,7 @@ header{
     flex:1;
 }
 
+
 .btn_secondary{
     color: var(--main-theme-text-color);
     padding: 0.5rem 1rem;
@@ -319,7 +326,7 @@ header{
     background-color: var(--input-color);
     width: 100%;
     padding: 1rem 1rem;
-    border-radius: 6px;
+    border-radius: 0.5rem;
     font-size: var(--font-size-sm);
     resize: none;
     color: white;
@@ -328,6 +335,7 @@ header{
 .form_step select:focus-visible,
 .form_step textarea:focus-visible{
     outline: 2px solid var(--form-active-color);
+    outline-offset: -2px;
 }
 
 .step_control{
@@ -341,7 +349,8 @@ header{
 
 .step_control input[type="range"] {
     appearance: none;
-    margin-top: 2rem;
+    margin-top:2rem;
+    margin-bottom: 1rem;
     width: 100%;
     height: 8px;
     border-radius: 0.75rem;
@@ -404,10 +413,12 @@ header{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
     border-radius: 1rem;
     border: 1px solid rgba(146, 146, 146, 0.2);
     padding: clamp(1rem, 2vw, 2rem);
     background: var(--secondary-color);
+    z-index:3;
 }
 .stat_card.active{
     background: var(--accent-fade-color);
@@ -430,6 +441,7 @@ header{
     margin-bottom: 0;
     color: var(--main-theme-text-color);
     font-size: var(--font-size-lg);
+    position: relative;
 }
 
 .stat_card progress{
@@ -473,7 +485,7 @@ header{
     color: var(--completed-color);
 }
 .goal_stats span.not_started{
-    color: var(--inactive-color);
+    color: var(--inactive-color) !important;
 }
 .goal_stats data{
     color: var(--main-theme-text-color);
@@ -503,6 +515,115 @@ header{
 .stat_card.active .goal_stats .created_date::before{
     background-color: orange;
 }
+.stat_card .controls{
+    position: absolute;
+    width: 100%;
+    bottom: -60px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-family: "Inter", sans-serif;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.stat_card .controls .btn_secondary{
+    opacity: 1;
+    display: block;
+    border-radius: 1rem;
+    border: 1px solid var(--accent-color) !important;
+    height: 3rem;
+    transition: all 0.5s ease;
+}
+.stat_card .controls .btn_secondary:hover{
+    border: 1px solid var(--accent-color) !important;
+    background-color: var(--accent-color) !important;
+}
+.stat_card .controls .btn_secondary[type="submit"]{
+    border: 2px solid var(--form-active-color) !important;
+}
+.stat_card .controls .btn_secondary[type="submit"]:hover{
+    background-color: var(--form-active-color) !important;
+}
+.stat_card .controls .btn_secondary.inactive{
+    display: none;
+    opacity: 0;
+}
+.add_funds{
+    position: absolute;
+    bottom: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+}
+.add_funds.active{
+    opacity: 1;
+    pointer-events: auto;
+}
+.stat_card input[type="number"]{
+    border: none;
+    background-color: var(--input-color);
+    width: 100%;
+    padding: 1rem 1rem;
+    border-radius: 6px;
+    font-size: var(--font-size-sm);
+    resize: none;
+    color: white;
+}
+.stat_card input[type="range"] {
+    appearance: none;
+    margin-top: 2rem;
+    width: 100%;
+    height: 8px;
+    border-radius: 0.75rem;
+    background: linear-gradient(90deg, var(--accent-color) 0%, var(--input-color) 0%);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.stat_card input[type="range"]:active{
+    transform: scale(1.05);
+}
+.stat_card input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width:1.5rem;
+    height:1.5rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+.stat_card input[type="range"]::-moz-range-thumb{
+    width:1.5rem;
+    height:1.5rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+.completed_bar{
+    position: absolute;
+    top: clamp(1rem, 2vw, 2rem);;
+    right: clamp(1rem, 2vw, 2rem);;
+    color: var(--completed-color);
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    background-color: rgb(17, 94, 17);
+    border-radius: 1rem;
+    border: 2px solid var(--completed-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.completed_bar:hover{
+    background-color: var(--completed-color);
+    color:rgb(17, 94, 17);
+}
+
 /* -----------user goals --------- */
 .user_goals{
     display: flex;
@@ -521,12 +642,8 @@ header{
 
 .goal_group .stat_card{
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.goal_group .stat_card:hover{
-    transform: scale(1.02);
-}
 .goal_group.normal {
     grid-template-areas:
         "ug1 ug1 ug2"
@@ -666,6 +783,11 @@ header{
         opacity 0.5s ease-in;
     color: var(--main-theme-text-color);
     padding-right: 1rem;
+    font-size: var(--font-size-md);
+}
+.search_input::placeholder {
+    font-size: var(--font-size-sm);  
+    /* color: #999;          */
 }
 
 .search.expanded{
@@ -713,8 +835,7 @@ header{
     top:0;
     right: 0;
     position: absolute;
-    z-index:4;
-    
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -744,6 +865,7 @@ header{
     background-color: rgba(31,31,31,0.52);
     backdrop-filter: blur(20px);
     cursor: default;
+    z-index: 4;
 }
 
 .sort_window_head {
@@ -811,7 +933,18 @@ header{
     background: var(--accent-color);
     box-shadow: inset 0 0 0 3px rgba(31,31,31,0.72);
 }
+/* -------------- modal backdrop ------------ */
+.modal_backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.5);
 
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .3s ease;
+}
 
 /* -------------- adaptive screen ---------- */
 @media(max-width: 992px){
@@ -843,6 +976,9 @@ header{
             "ugm1 ugm1"
             "ugm2 ugm3" 
             "ugm4 ugm4";
+    }
+    .completed_bar{
+        display: none;
     }
 }
 

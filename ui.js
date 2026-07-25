@@ -13,6 +13,9 @@ const formStepsContainer = document.querySelector(".form_steps_container");
 const activeGoals = document.getElementById("active_goals_data");
 const completedGoals = document.getElementById("goals_completed_data");
 const totalSaved = document.getElementById("total_savings_data");
+const goalsContainer = document.querySelector(".user_goals");
+const modalBackdrop = document.querySelector(".modal_backdrop");
+
 
 document.documentElement.style.setProperty("--steps", stepIndicators.length);
 
