@@ -1,4 +1,11 @@
-//------- new goal button 
+
+import Goal from "../models/goal.js";
+import GoalStorage from "../models/goalStorage.js";
+import { goals, refreshGoals } from "../app.js";
+import { updateStats } from "./statsRender.js";
+import { renderGoals } from "./goalRender.js";
+
+
 
 const newGoalBtn = document.getElementById("newGoalBtn");
 const newGoalModal = document.querySelector(".new_goal_modal");
@@ -10,12 +17,16 @@ const nextBtn = document.getElementById('nextBtn');
 const submitBtn = document.getElementById('submitBtn');
 const formSteps = document.querySelectorAll('.form_step');
 const formStepsContainer = document.querySelector(".form_steps_container");
-const activeGoals = document.getElementById("active_goals_data");
-const completedGoals = document.getElementById("goals_completed_data");
-const totalSaved = document.getElementById("total_savings_data");
-const goalsContainer = document.querySelector(".user_goals");
-const modalBackdrop = document.querySelector(".modal_backdrop");
 
+const current = document.getElementById('goal-current');
+const slider = document.getElementById('goal-slider');
+const target = document.getElementById('goal-target');
+
+const goalTitle = document.getElementById("goal-title");
+const goalDescription = document.getElementById("goal-description");
+const goalTarget = document.getElementById("goal-target");
+const goalDeadline = document.getElementById("goal-deadline");
+const goalCurrent = document.getElementById("goal-current");
 
 document.documentElement.style.setProperty("--steps", stepIndicators.length);
 
@@ -70,11 +81,6 @@ nextBtn.addEventListener("click", (e) => {
     }
 })
 
-    // current amount slider
-const current = document.getElementById('goal-current');
-const slider = document.getElementById('goal-slider');
-const target = document.getElementById('goal-target');
-
 function updateSlider() {
     const max = parseFloat(target.value) || 100;
     slider.max = max;
@@ -104,87 +110,34 @@ document.addEventListener('keydown', (e) => {
 });
 
 
+newGoalForm.addEventListener("submit", (e) => {
 
+    e.preventDefault();
 
-
-
-
-
-
-
-
-
-// -------total savings hover effect 
-
-// Hover total savings card effect 
-// include lib/vanilla-tilt.min.js 
-const statsCard = document.querySelector('.user_statistics > .stat_card');
-
-VanillaTilt.init(statsCard, {
-    max:3,
-    glare: true,
-    'max-glare': 0.2,
-    scale: 1.02,
-    speed:  10000, 
-});
-
-// ------- search functions
-const searchContainer  = document.querySelector(".search"); 
-const searchInput = document.getElementById('searchInput')
-
-searchContainer.addEventListener('click', () => {
-    if (searchContainer.classList.contains('expanded')) return;
-    
-    searchContainer.classList.add('pressed');
-    
-    setTimeout(() => {
-        searchContainer.classList.remove('pressed');
-        searchContainer.classList.add('expanded');
-    }, 100);
-});
-
-document.addEventListener('click', (e) => {
-    if (!searchContainer.contains(e.target)) 
-        searchContainer.classList.remove('expanded');
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        searchContainer.classList.remove('expanded');
-        searchInput.blur();
-    }
-});
-
-
-// ----------- SORT BY -------------
-const sortByWindow = document.querySelector('.sort_window');
-const header = document.querySelector('.sort_window_head');
-
-let open = false;
-
-header.addEventListener('click', (e) => {
-    sortByWindow.classList.add('pressed');
-        
-    setTimeout(() => {
-        sortByWindow.classList.remove('pressed');
-        if (typeof callback === 'function') 
-            callback();
-    }, 150); 
-    
-    e.stopPropagation();
-    open = !open;
-    sortByWindow.classList.toggle('open', open);
-});
-
-document.addEventListener('click', () => {
-    if (open) { open = false; sortByWindow.classList.remove('open'); }
-});
-
-document.querySelectorAll('.opt input').forEach(r => {
-    r.addEventListener('change', function() {
-        setTimeout(() => { open = false; sortByWindow.classList.remove('open'); }, 200);
+    const goal = new Goal({
+        title: goalTitle.value,
+        description: goalDescription.value,
+        target: goalTarget.value,
+        current: goalCurrent.value,
+        deadline: goalDeadline.value,
     });
+
+    const error = goal.validate();
+
+
+    if (error) {
+        alert(error);
+        return;
+    }
+
+    GoalStorage.add(goal);
+    refreshGoals();
+
+    updateStats();
+
+    renderGoals();
+
+    newGoalForm.reset();
+    newGoalModal.classList.remove('active');
+    currentStep = 0;
 });
-
-
-
