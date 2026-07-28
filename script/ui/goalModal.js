@@ -1,62 +1,35 @@
-import { goals, refreshGoals } from "../app.js";
-import { updateStats } from "./statsRender.js";
-import { renderGoals } from "./goalRender.js";
+import { refreshUI } from "../app.js";
 import GoalStorage from "../models/goalStorage.js";
-
-let activeModal = null;
+import { updateSlider } from "./newGoalModal.js";
 
 const goalsContainer = document.querySelector(".user_goals");
 const modalBackdrop = document.querySelector(".modal_backdrop");
 
-function addFunds(goal, card){
-    const current = card.querySelector('#goal-update-current');
-    const slider = card.querySelector('#goal-update-slider');
+function linkInputs(maxAmount, current, slider){
+    
+    slider.addEventListener("input", () => {
+        current.value = slider.value;
+        updateSlider(slider, current, maxAmount);
+    });
 
-    function updateSlider() {
-        const max = goal.target - goal.current;
-        slider.max = max;
-        const val = Math.min(parseFloat(current.value) || 0, max);
-        current.value = val;
-        slider.value = val;
-        slider.style.background = `linear-gradient(90deg, var(--accent-color) ${(val/max)*100}%, var(--input-color) ${(val/max)*100}%)`;
-    }
-
-    slider.oninput = () => { current.value = slider.value; updateSlider(); };
-    current.oninput = updateSlider;
-
-    const submit = card.querySelector("#submitFundsUpdate");
-    submit.addEventListener("click", () => {
-        const amount = parseFloat(current.value);
-        goal.current += amount;
-
-        if(!amount || amount <= 0) return;
-        
-        if(goal.current > goal.target)
-            goal.current = goal.target;
-
-        GoalStorage.update(goal);
-        refreshGoals();
-
-        closeGoalModal();
-        renderGoals();
-        updateStats();
-    })
-}
-function deleteGoal(goal){
-
-    GoalStorage.remove(goal.id);
-
-    closeGoalModal();
-
-    refreshGoals();
-    renderGoals();
-    updateStats();
+    current.addEventListener("input", () => {
+        updateSlider(slider, current, maxAmount);
+    });
 }
 
+export function closeGoalModal(card, clone, rect, goalModalControls){
 
-export function closeGoalModal(){
-    const { card, clone, rect, goalModalControls } = activeModal;
+    hideAbsoluteCenterModal(card, clone, rect, goalModalControls);
 
+    clone.addEventListener("transitionend", (e) => {
+        document.body.style.overflow = "";
+        card.style.opacity = "1";
+
+        clone.remove();
+    }, { once: true });
+}
+
+export function hideAbsoluteCenterModal(card, clone, rect, goalModalControls){
     modalBackdrop.style.opacity = 0;
     modalBackdrop.style.pointerEvents = "none";
 
@@ -66,39 +39,10 @@ export function closeGoalModal(){
     
     goalModalControls.style.pointerEvents = "none";
     goalModalControls.style.opacity = "0";
-    
-    clone.addEventListener("transitionend", (e) => {
-        document.body.style.overflow = "";
-        card.style.opacity = "1";
 
-        clone.remove();
-    }, { once: true });
 }
 
-
-export function openGoalModal(e){
-    const card = e.target.closest(".stat_card");
-
-    if(!card) return;
-
-    const id = card.dataset.id;
-
-    const goal = goals.find(
-        goal => goal.id === id
-    );
-    
-    const rect = card.getBoundingClientRect();
-    const clone = card.cloneNode(true);
-    
-    const goalModalControls = clone.querySelector(".controls");
-    
-
-    activeModal = {
-        card,
-        clone,
-        rect,
-        goalModalControls
-    };
+export function showAbsoluteCenterModal(card, clone, rect, goalModalControls){
 
     clone.style.position = "fixed";
     clone.style.left = rect.left + "px";
@@ -133,39 +77,86 @@ export function openGoalModal(e){
         goalModalControls.style.pointerEvents = "auto";
         goalModalControls.style.opacity = "1";
 
-        const addFundsBtn = clone.querySelector("#addFundsBtn");
-        const deleteGoalBtn = clone.querySelector("#deleteGoalBtn");
-
-        const submitFundsUpdateBtn = clone.querySelector("#submitFundsUpdate");
-        const submitDeleteGoalBtn = clone.querySelector("#submitDeleteGoal");
-        const cloneCompleteGoalBtn = clone.querySelector(".completed_bar");
-
-        const addFundsControls = clone.querySelector(".add_funds");
-
-        addFundsBtn.addEventListener("click",() => {
-            addFunds(goal, clone); 
-            addFundsControls.classList.toggle("active");
-            deleteGoalBtn.classList.toggle("inactive");
-            submitFundsUpdateBtn.classList.toggle("inactive");
-        });
-
-        deleteGoalBtn.addEventListener("click", () => {
-            addFundsBtn.classList.toggle("inactive");
-            submitDeleteGoalBtn.classList.toggle("inactive");
-
-            submitDeleteGoalBtn.addEventListener("click", () => deleteGoal(goal))
-        });
-
-        cloneCompleteGoalBtn.addEventListener("click", () => {
-            const confirmDelete = confirm(
-                `Delete "${goal.title}"?`
-            );
-            if(!confirmDelete) return;
-
-            deleteGoal(goal)
     });
+}
+
+export function openGoalModal(e){
+    const card = e.target.closest(".stat_card");
+
+    if(!card) return;
+
+    const id = card.dataset.id;
+
+    const goal = GoalStorage.getGoal(id);
+
+    const rect = card.getBoundingClientRect();
+    const clone = card.cloneNode(true);
+    const goalModalControls = clone.querySelector(".controls");
+    
+    showAbsoluteCenterModal(card, clone, rect, goalModalControls);
+
+    modalBackdrop.addEventListener("click", ()=> {
+        closeGoalModal(card, clone, rect, goalModalControls)},
+        {once: true }
+    );
+
+    const addFundsBtn          = clone.querySelector("#addFundsBtn");
+    const deleteGoalBtn        = clone.querySelector("#deleteGoalBtn");
+
+    const submitFundsUpdateBtn = clone.querySelector("#submitFundsUpdate");
+    const submitDeleteGoalBtn  = clone.querySelector("#submitDeleteGoal");
+    const cloneCompleteGoalBtn = clone.querySelector(".completed_bar");
+
+    const addFundsControls     = clone.querySelector(".add_funds");
+    const current = clone.querySelector('#goal-update-current');
+    const slider = clone.querySelector('#goal-update-slider');
+
+    addFundsBtn.addEventListener("click",() => {
+        let maxAmount = goal.target - goal.current;
+        linkInputs(maxAmount, current, slider);
+
+        addFundsControls.classList.toggle("active");
+        deleteGoalBtn.classList.toggle("inactive");
+        submitFundsUpdateBtn.classList.toggle("inactive");
+
+    });
+
+    submitFundsUpdateBtn.addEventListener("click", () => {
+        const amount = parseFloat(current.value);
+
+        if(!amount || amount <= 0) return;
+        goal.current += amount;
+
+        if(goal.current > goal.target)
+            goal.current = goal.target;
+
+        GoalStorage.update(goal);
+
+        closeGoalModal(card, clone, rect, goalModalControls);
+        refreshUI(); 
+    });
+
+    deleteGoalBtn.addEventListener("click", () => {
+        addFundsBtn.classList.toggle("inactive");
+        submitDeleteGoalBtn.classList.toggle("inactive");
+
+        submitDeleteGoalBtn.addEventListener("click", () => {
+            GoalStorage.remove(goal.id);
+            closeGoalModal(card, clone, rect, goalModalControls);
+            refreshUI();
+        }, { once:true })
+    });
+
+    cloneCompleteGoalBtn.addEventListener("click", () => {
+        const confirmDelete = confirm(
+            `Complete and delete "${goal.title}"?`
+        );
+        if(!confirmDelete) return;
+
+        GoalStorage.remove(goal.id);
+        closeGoalModal(card, clone, rect, goalModalControls);
+        refreshUI();
     });
 }
 
 goalsContainer.addEventListener("click", openGoalModal);
-modalBackdrop.addEventListener("click", closeGoalModal);

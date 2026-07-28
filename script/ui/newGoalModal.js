@@ -1,10 +1,7 @@
 
 import Goal from "../models/goal.js";
 import GoalStorage from "../models/goalStorage.js";
-import { goals, refreshGoals } from "../app.js";
-import { updateStats } from "./statsRender.js";
-import { renderGoals } from "./goalRender.js";
-
+import { refreshUI } from "../app.js";
 
 
 const newGoalBtn = document.getElementById("newGoalBtn");
@@ -12,15 +9,17 @@ const newGoalModal = document.querySelector(".new_goal_modal");
 const newGoalForm = document.querySelector(".progress_form");
 const formProgress = document.querySelector('.progress_form_progress');
 const stepIndicators = document.querySelectorAll(".progress_form_container li");
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const submitBtn = document.getElementById('submitBtn');
+
 const formSteps = document.querySelectorAll('.form_step');
 const formStepsContainer = document.querySelector(".form_steps_container");
 
-const current = document.getElementById('goal-current');
-const slider = document.getElementById('goal-slider');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+
 const target = document.getElementById('goal-target');
+const slider = document.getElementById('goal-slider');
+const current = document.getElementById('goal-current');
 
 const goalTitle = document.getElementById("goal-title");
 const goalDescription = document.getElementById("goal-description");
@@ -31,6 +30,14 @@ const goalCurrent = document.getElementById("goal-current");
 document.documentElement.style.setProperty("--steps", stepIndicators.length);
 
 let currentStep = 0;
+
+export function updateSlider(slider, current, max) {
+    slider.max = max;
+    const val = Math.min(parseFloat(current.value) || 0, max);
+    current.value = val;
+    slider.value = val;
+    slider.style.background = `linear-gradient(90deg, var(--accent-color) ${(val/max)*100}%, var(--input-color) ${(val/max)*100}%)`;
+}
 
 const isValidStep = () => {
     const fields = formSteps[currentStep].querySelectorAll('#goal-title, #goal-target');
@@ -81,24 +88,23 @@ nextBtn.addEventListener("click", (e) => {
     }
 })
 
-function updateSlider() {
-    const max = parseFloat(target.value) || 100;
-    slider.max = max;
-    const val = Math.min(parseFloat(current.value) || 0, max);
-    current.value = val;
-    slider.value = val;
-    slider.style.background = `linear-gradient(90deg, var(--accent-color) ${(val/max)*100}%, var(--input-color) ${(val/max)*100}%)`;
-}
+target.addEventListener("input", () => {
+    updateSlider(slider, current, parseFloat(target.value) || 100);
+});
 
-target.oninput = updateSlider;
-slider.oninput = () => { current.value = slider.value; updateSlider(); };
-current.oninput = updateSlider;
+slider.addEventListener("input", () => {
+    current.value = slider.value;
+    updateSlider(slider, current, parseFloat(target.value) || 100);
+});
+
+current.addEventListener("input", () => {
+    updateSlider(slider, current, parseFloat(target.value) || 100);
+});
 
 newGoalBtn.addEventListener('click', (e) => {
     e.stopPropagation()
     newGoalModal.classList.toggle('active');
     updateFormProgress();
-    updateSlider();
 });
 document.addEventListener('click', function(e) {
     if (!newGoalForm.contains(e.target) && newGoalModal.classList.contains('active')) 
@@ -131,11 +137,8 @@ newGoalForm.addEventListener("submit", (e) => {
     }
 
     GoalStorage.add(goal);
-    refreshGoals();
 
-    updateStats();
-
-    renderGoals();
+    refreshUI();
 
     newGoalForm.reset();
     newGoalModal.classList.remove('active');

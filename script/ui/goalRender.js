@@ -1,4 +1,4 @@
-import { goals } from "../app.js";
+import GoalStorage from "../models/goalStorage.js";
 
 function chunk(array, size) {
     const result = [];
@@ -24,11 +24,8 @@ function createGoalCard(goal, index) {
 
     const value = goal.getProgress().toFixed(0);
     
+    if (index === 0) card.classList.add("active");
     
-
-    if (index === 0) {
-        card.classList.add("active");
-    }
 
     card.innerHTML = `
         <h3>${goal.title}</h3>
@@ -57,7 +54,6 @@ function createGoalCard(goal, index) {
         </div>
     `;
 
-
     return card;
 }
 
@@ -68,7 +64,7 @@ export function renderGoals() {
     container.innerHTML = "";
 
 
-    const groups = chunk(goals, 4);
+    const groups = chunk(GoalStorage.getAll(), 4);
 
 
     groups.forEach((group, index) => {
@@ -89,7 +85,6 @@ export function renderGoals() {
                 createGoalCard(goal, index)
             );
         });
-
 
         container.append(grid);
 

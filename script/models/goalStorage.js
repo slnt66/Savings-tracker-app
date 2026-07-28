@@ -44,6 +44,31 @@ class GoalStorage {
 
         this.save(goals);
     }
+    static getGoal(id){
+        const goals = this.getAll();
+
+        return goals.find(goal => goal.id === id) ?? null;
+    }
+    static getSize(){
+        const goals = this.getAll();
+
+        return goals.length;
+    }
+    static getCompleted(){
+        const goals = this.getAll();
+
+        return goals.filter(
+            goal => goal.getProgress() === 100
+        ).length;
+    }
+    static getSavingsSum(){
+        const goals = this.getAll();
+
+        return goals.reduce(
+            (sum, goal) => sum + goal.current,
+            0
+        );
+    }
 }
 
 export default GoalStorage;

@@ -1,4 +1,3 @@
-import Goal from "./models/goal.js";
 import GoalStorage from "./models/goalStorage.js";
 import { updateStats } from "./ui/statsRender.js";
 import { renderGoals } from "./ui/goalRender.js";
@@ -10,14 +9,10 @@ import "./ui/search.js";
 import "./ui/search.js";
 import "./ui/sortBy.js";
 
-export let goals = GoalStorage.getAll();
+refreshUI();
 
-init();
-
-function init() {
+export function refreshUI() 
+{
     updateStats();
     renderGoals();
-}
-export function refreshGoals(){
-    goals = GoalStorage.getAll();
 }
