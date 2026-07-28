@@ -7,6 +7,7 @@ class Goal {
         current = 0,
         deadline = null,
         createdAt = new Date().toISOString(),
+        deposits = [],
     }){
         this.id = id;
         this.title = title.trim();
@@ -15,6 +16,7 @@ class Goal {
         this.current = Number(current);
         this.deadline = deadline;
         this.createdAt = createdAt;
+        this.deposits = deposits;
     }
 
     validate(){

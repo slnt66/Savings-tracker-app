@@ -37,7 +37,7 @@ function createGoalCard(goal, index) {
             </span>
             <progress max="100" value="${value}" class="${value == 100 ? `completed` : ``} ${value == 0 ? `not_started` : ``}"></progress>
             <data>
-                $${goal.current} of $${goal.target}
+                $${goal.current.toFixed(1)} of $${goal.target.toFixed(1)}
             </data>
              ${goal.deadline ? `<p class="created_date">Due ${day} ${month} ${year}</p>` : ''}
         </div>
@@ -57,15 +57,22 @@ function createGoalCard(goal, index) {
     return card;
 }
 
-export function renderGoals() {
+export function renderGoals(goals = GoalStorage.getAll()) {
 
     const container = document.querySelector(".user_goals");
 
     container.innerHTML = "";
-
-
-    const groups = chunk(GoalStorage.getAll(), 4);
-
+    if(goals.length ===0){
+        container.innerHTML = `
+            <div class="empty_state">
+                <img src="../../static/images/not-found.svg">
+                No goals found
+            </div>
+        `;
+        return;
+    }
+    
+    const groups = chunk(goals, 4);
 
     groups.forEach((group, index) => {
 

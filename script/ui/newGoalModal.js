@@ -33,7 +33,7 @@ let currentStep = 0;
 
 export function updateSlider(slider, current, max) {
     slider.max = max;
-    const val = Math.min(parseFloat(current.value) || 0, max);
+    const val = Math.min(parseFloat(current.value).toFixed(1) || 0, max);
     current.value = val;
     slider.value = val;
     slider.style.background = `linear-gradient(90deg, var(--accent-color) ${(val/max)*100}%, var(--input-color) ${(val/max)*100}%)`;
@@ -127,6 +127,14 @@ newGoalForm.addEventListener("submit", (e) => {
         current: goalCurrent.value,
         deadline: goalDeadline.value,
     });
+
+    if(goal.current > 0){
+        goal.deposits.push({
+            amount: goal.current,
+            date: new Date().toISOString(),
+            type: "initial"
+        });
+    }
 
     const error = goal.validate();
 

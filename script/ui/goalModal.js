@@ -125,7 +125,13 @@ export function openGoalModal(e){
         const amount = parseFloat(current.value);
 
         if(!amount || amount <= 0) return;
+        
         goal.current += amount;
+
+        goal.deposits.push({
+            amount,
+            date: new Date().toISOString()
+        });
 
         if(goal.current > goal.target)
             goal.current = goal.target;
