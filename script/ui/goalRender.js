@@ -28,8 +28,10 @@ function createGoalCard(goal, index) {
     
 
     card.innerHTML = `
-        <h3>${goal.title}</h3>
-        
+        <div style="position: relative">
+            <h3>${goal.title}</h3>
+            <p class="goal_description">${goal.description}</p>
+        </div>
         <div class="goal_stats">
             ${value == 100 ? `<div class="completed_bar">complete</div>` : ''}
             <span class="${value == 100 ? `completed` : ``} ${value == 0 ? `not_started` : ``}">
@@ -69,32 +71,30 @@ export function renderGoals(goals = GoalStorage.getAll()) {
                 No goals found
             </div>
         `;
-        return;
-    }
+    } else {
+        const groups = chunk(goals, 4);
     
-    const groups = chunk(goals, 4);
-
-    groups.forEach((group, index) => {
-
-        const grid = document.createElement("div");
-
-
-        grid.classList.add(
-            "goal_group",
-            index % 2 === 0
-                ? "normal"
-                : "mirrored"
-        );
-
-
-        group.forEach((goal, index) => {
-            grid.append(
-                createGoalCard(goal, index)
+        groups.forEach((group, index) => {
+    
+            const grid = document.createElement("div");
+    
+    
+            grid.classList.add(
+                "goal_group",
+                index % 2 === 0
+                    ? "normal"
+                    : "mirrored"
             );
+    
+    
+            group.forEach((goal, index) => {
+                grid.append(
+                    createGoalCard(goal, index)
+                );
+            });
+    
+            container.append(grid);
+    
         });
-
-        container.append(grid);
-
-    });
-
+    }
 }

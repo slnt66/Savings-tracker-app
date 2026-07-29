@@ -17,10 +17,11 @@ function linkInputs(maxAmount, current, slider){
     });
 }
 
-export function closeGoalModal(card, clone, rect, goalModalControls){
+export function closeGoalModal(card, clone, rect, goalModalControls,cloneGoalDescription){
 
-    hideAbsoluteCenterModal(card, clone, rect, goalModalControls);
+    hideAbsoluteCenterModal(card, clone, rect, goalModalControls,cloneGoalDescription);
 
+    clone.style.opacity = "1";
     clone.addEventListener("transitionend", (e) => {
         document.body.style.overflow = "";
         card.style.opacity = "1";
@@ -29,7 +30,7 @@ export function closeGoalModal(card, clone, rect, goalModalControls){
     }, { once: true });
 }
 
-export function hideAbsoluteCenterModal(card, clone, rect, goalModalControls){
+export function hideAbsoluteCenterModal(card, clone, rect, goalModalControls, cloneGoalDescription){
     modalBackdrop.style.opacity = 0;
     modalBackdrop.style.pointerEvents = "none";
 
@@ -39,10 +40,12 @@ export function hideAbsoluteCenterModal(card, clone, rect, goalModalControls){
     
     goalModalControls.style.pointerEvents = "none";
     goalModalControls.style.opacity = "0";
-
+    if(cloneGoalDescription){
+        cloneGoalDescription.classList.remove('active');
+    }
 }
 
-export function showAbsoluteCenterModal(card, clone, rect, goalModalControls){
+export function showAbsoluteCenterModal(card, clone, rect, goalModalControls, cloneGoalDescription){
 
     clone.style.position = "fixed";
     clone.style.left = rect.left + "px";
@@ -64,6 +67,9 @@ export function showAbsoluteCenterModal(card, clone, rect, goalModalControls){
     let dy = centerY - rect.top;
 
     requestAnimationFrame(() => {
+        if(cloneGoalDescription){
+            cloneGoalDescription.classList.add('active');
+        }
         document.body.style.overflow = "hidden";
         card.style.opacity = "0";
         clone.style.transform =
@@ -92,11 +98,12 @@ export function openGoalModal(e){
     const rect = card.getBoundingClientRect();
     const clone = card.cloneNode(true);
     const goalModalControls = clone.querySelector(".controls");
-    
-    showAbsoluteCenterModal(card, clone, rect, goalModalControls);
+    const cloneGoalDescription = clone.querySelector(".goal_description")
+
+    showAbsoluteCenterModal(card, clone, rect, goalModalControls, cloneGoalDescription);
 
     modalBackdrop.addEventListener("click", ()=> {
-        closeGoalModal(card, clone, rect, goalModalControls)},
+        closeGoalModal(card, clone, rect, goalModalControls, cloneGoalDescription)},
         {once: true }
     );
 

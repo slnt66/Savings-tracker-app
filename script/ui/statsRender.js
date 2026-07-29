@@ -16,44 +16,23 @@ export function updateStats(){
         currency: "USD"
     }).format(total);
 
-    const stats = getMonthlyDeposits(
+    renderMonthlyDeposits(
         GoalStorage.getAll()
     );
 
-    const max = Math.max(
-        ...stats.map(item => item.deposits)
-    );
-
-
-    const containers = document.querySelectorAll(
-        ".monthly_spendings"
-    );
-
-
-    containers.forEach((container, index)=>{
-
-        const data = stats[index];
-
-        const height = max
-            ? (data.deposits / max) * 100
-            : 0;
-
-
-        container.querySelector("span")
-            .textContent = data.month;
-
-
-        container.querySelector("data")
-            .textContent = `$${data.deposits.toFixed(1)}`;
-
-
-        container.querySelector(".monthly_spendings_progress_bar")
-            .style.height = `${height}%`;
-
-    });
 } 
 
-export function getMonthlyDeposits(goals){
+function getVisibleMonthsCount(){
+    if(window.innerWidth < 576)
+        return 4;
+
+    if(window.innerWidth < 992)
+        return 6;
+
+    return 12;
+}
+
+export function collectMonthlyDeposits(goals){
 
     const months = [];
 
@@ -68,7 +47,7 @@ export function getMonthlyDeposits(goals){
         );
 
         months.push({
-            month: date.toLocaleString(
+            label: date.toLocaleString(
                 "en-US",
                 { month: "short" }
             ),
@@ -84,8 +63,8 @@ export function getMonthlyDeposits(goals){
 
             const depositDate = new Date(deposit.date);
 
-            const index = months.findIndex(month =>
-                month.month === depositDate.toLocaleString(
+            const month = months.find(month =>
+                month.label === depositDate.toLocaleString(
                     "en-US",
                     { month:"short" }
                 )
@@ -94,14 +73,69 @@ export function getMonthlyDeposits(goals){
             );
 
 
-            if(index !== -1){
-                months[index].deposits += deposit.amount;
+            if(month){
+                month.deposits += deposit.amount;
             }
 
         });
 
     });
 
-
     return months;
+}
+
+export function renderMonthlyDeposits(goals){
+
+    const container = document.querySelector(".yearly_stats");
+
+    const monthsCount = getVisibleMonthsCount();
+
+    const months = collectMonthlyDeposits(goals)
+        .slice(0, monthsCount);
+
+
+    container.style.setProperty(
+        "--months-count",
+        months.length
+    );
+
+
+    container.innerHTML = "";
+
+
+    const maxDeposit = Math.max(
+        ...months.map(month => month.deposits),
+        1
+    );
+
+
+    months.forEach(month => {
+
+        const card = document.createElement("div");
+
+        card.className = "monthly_spendings";
+
+        const height = 
+            (month.deposits / maxDeposit) * 100;
+
+
+        card.innerHTML = `
+            <div class="progress_container">
+                <div class="monthly_spendings_progress_bar"
+                     style="height:${height}%">
+                </div>
+            </div>
+
+            <data value="${month.deposits.toFixed(1)}">
+                $${month.deposits.toFixed(1)}
+            </data>
+
+            <span>
+                ${month.label}
+            </span>
+        `;
+
+
+        container.append(card);
+    });
 }

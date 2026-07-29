@@ -16,7 +16,7 @@
     --secondary-font: "Bricolage Grotesque", sans-serif;
 
     --color-base: rgb(10, 10, 10);
-    --accent-fade-color: linear-gradient(to bottom right, rgb(199, 56, 0), rgb(253, 101, 41));
+    --accent-fade-color: linear-gradient(to bottom right, rgb(224, 89, 35), rgb(253, 101, 41));
     --secondary-fade-color: linear-gradient(to right, rgb(31, 31, 31), rgb(32, 30, 30));
     --secondary-color: rgba(31, 31, 31,1);
     --completed-color: rgb(111, 243, 107);
@@ -28,6 +28,7 @@
     --progress-width: calc((var(--steps) - 1)/ var(--steps) * 100%);
     --form-active-color: greenyellow;
     --input-color: rgb(20,20,20);
+
 }
 /* ----- global styles--- */
 *{
@@ -123,7 +124,7 @@ header{
     font-family: var(--main-font);
     border: 1px solid rgba(146, 146, 146, 0.2);
     font-size: var(--font-size-sm);
-    transition: all 0.3s ease;
+    transition: transform .15s ease;
     background-color: var(--accent-color);
 }
 
@@ -132,9 +133,7 @@ header{
     height: 20px;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.btn_primary:hover{
-    transform:scale(1.02);
-}
+
    /* -----------new goal modal window */
 .new_goal_modal{
     font-family: var(--main-font);
@@ -447,7 +446,19 @@ header{
     font-size: var(--font-size-lg);
     position: relative;
 }
-
+.stat_card .goal_description{
+    margin-top: 0.5rem;
+    font-family: var(--main-font);
+    font-size: 0;
+    color: var(--main-theme-text-color);
+    position: absolute;
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+.stat_card .goal_description.active{
+    opacity: 1;
+    font-size: var(--font-size-md);
+}
 .stat_card progress{
     width: 100%;
     margin-block: 0.5rem;
@@ -636,14 +647,15 @@ header{
     gap:1rem;
     width: 100%;
     margin-top:2rem;
-    min-height: 30vw;
+    min-height: 500px;
 }
 .goal_group {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 250px);
-    gap: 1rem;
+    gap: 1rem;  
+    transition: opacity .2s;
 }
 
 .goal_group .stat_card{
@@ -694,10 +706,9 @@ header{
 }
 .empty_state{
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    bottom:50%;
+    justify-content: center;
+    align-items: center;  
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
@@ -705,6 +716,7 @@ header{
     font-family: var(--main-font);
     font-size: var(--font-size-md);
     gap:1rem;
+    height: 100%;
 }
 .empty_state img{
     width:  8rem;
@@ -714,14 +726,16 @@ header{
 
 .yearly_stats{
     margin-top:2rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(var(--months-count), minmax(2.5rem, 1fr));
+    gap: 1rem;
+    align-items: end;
 }
 .monthly_spendings{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: .5rem;
 }
 .monthly_spendings > data {
     font-size: var(--font-size-md);
@@ -732,8 +746,8 @@ header{
     font-size:var(--font-size-md);
 }
 .progress_container{
-    width:clamp(2rem, 10vw, 6rem);
-    height:clamp(7rem, 15vw,12.5rem);
+    width: 80%;
+    height: clamp(7rem, 15vw, 12.5rem);
     display: flex;
     align-items: flex-end;
 }
@@ -787,7 +801,9 @@ header{
     
     margin-left: 1rem;
 
-    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transition: 
+        transform .1s ease,
+        width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
         border-radius 0.3s ease,
         backdrop-filter 0.5s ease,
         background-color 0.5s ease-in,
@@ -801,9 +817,9 @@ header{
     width: 0;
     opacity: 0;
     transition:
-        width 0.6s ease-in, 
-        width 0.2s ease-out,
-        opacity 0.5s ease-in;
+        width 0.6s ease-in , 
+        width 0.2s  ease-out,
+        opacity 0.5s  ease-in;
     color: var(--main-theme-text-color);
     padding-right: 1rem;
     font-size: var(--font-size-md);
@@ -825,28 +841,9 @@ header{
     opacity: 1;
 } 
 .pressed{
-    animation: Press 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    transform: scale(.96);
 }
-@keyframes Press {
-    0% { 
-        transform: scale(1) translateY(0); 
-    }
-    25% { 
-        transform: scale(0.92) translateY(4px);
-    }
-    50% { 
-        transform: scale(0.97) translateY(0); 
-    }
-    65% { 
-        transform: scale(1.03) translateY(-6px); 
-    }
-    80% { 
-        transform: scale(0.99) translateY(0); 
-    }
-    100% { 
-        transform: scale(1) translateY(0); 
-    }
-}
+
 
 /* --------------- sort by list ----------- */
 
@@ -871,6 +868,7 @@ header{
     border: 1px solid rgba(146, 146, 146, 0.2);
 
     transition: 
+        transform .1s ease,
         width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
         height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
         border-radius 0.3s ease,

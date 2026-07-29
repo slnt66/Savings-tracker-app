@@ -103,9 +103,15 @@ current.addEventListener("input", () => {
 
 newGoalBtn.addEventListener('click', (e) => {
     e.stopPropagation()
+    newGoalBtn.classList.add('pressed');
     newGoalModal.classList.toggle('active');
     updateFormProgress();
 });
+
+newGoalBtn.addEventListener('transitionend', (e) => {
+    newGoalBtn.classList.remove('pressed');
+});
+
 document.addEventListener('click', function(e) {
     if (!newGoalForm.contains(e.target) && newGoalModal.classList.contains('active')) 
         newGoalModal.classList.remove('active');

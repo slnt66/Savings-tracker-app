@@ -8,11 +8,20 @@ searchContainer.addEventListener('click', () => {
     if (searchContainer.classList.contains('expanded')) return;
     
     searchContainer.classList.add('pressed');
+
+    searchContainer.classList.add('expanded');
     
-    setTimeout(() => {
-        searchContainer.classList.remove('pressed');
-        searchContainer.classList.add('expanded');
-    }, 100);
+});
+searchContainer.addEventListener('transitionend', () => {
+    searchContainer.classList.remove('pressed');
+});
+
+searchContainer.addEventListener("focusin", () => {
+    searchContainer.classList.add("expanded");
+});
+
+searchContainer.addEventListener("focusout", () => {
+    searchContainer.classList.remove("expanded");
 });
 
 document.addEventListener('click', (e) => {

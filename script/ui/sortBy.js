@@ -5,15 +5,15 @@ const header = document.querySelector('.sort_window_head');
 
 
 header.addEventListener('click', (e) => {
-    sortByWindow.classList.add('pressed');
-        
-    setTimeout(() => {
-        sortByWindow.classList.remove('pressed');
-    }, 150); 
-    
     e.stopPropagation();
 
+    sortByWindow.classList.add("pressed");
+
     sortByWindow.classList.toggle('open');
+});
+
+sortByWindow.addEventListener("transitionend", () => {
+    sortByWindow.classList.remove("pressed");
 });
 
 document.addEventListener('click', () => {
