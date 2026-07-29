@@ -17,18 +17,31 @@
 
     --color-base: rgb(10, 10, 10);
     --accent-fade-color: linear-gradient(to bottom right, rgb(224, 89, 35), rgb(253, 101, 41));
-    --secondary-fade-color: linear-gradient(to right, rgb(31, 31, 31), rgb(32, 30, 30));
     --secondary-color: rgba(31, 31, 31,1);
+    --secondary-color-transparent: rgba(31, 31, 31,0.52);
     --completed-color: rgb(111, 243, 107);
     --accent-color: rgb(253, 89, 24);
+    --form-active-color: greenyellow;
+    --input-color: rgb(20,20,20); 
+    --current-step-light: rgba(173, 255, 47, 0.45);
     --inactive-color: rgb(155, 147, 147);
     --main-theme-text-color: white;
 
+
+
     --step-size: 2rem;
     --progress-width: calc((var(--steps) - 1)/ var(--steps) * 100%);
-    --form-active-color: greenyellow;
-    --input-color: rgb(20,20,20);
-
+}
+.dark{
+    --color-base: #16151d;
+    --accent-fade-color: linear-gradient(to bottom right, #FA87A1, #eb91a6);
+    --secondary-color: #3f2f3a;
+    --secondary-color-transparent: #4a3f4b9c;
+    --completed-color: #a0d632;
+    --accent-color: #FA87A1;
+    --form-active-color: #f8a1b6;
+    --input-color: rgb(48, 30, 40);
+    --current-step-light:#fa9db3b6;
 }
 /* ----- global styles--- */
 *{
@@ -134,6 +147,67 @@ header{
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.theme_switch {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin: auto 0 auto 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--accent-color);
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--color-base);
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Эффект при наведении */
+.slider:hover {
+    background-color: var(--secondary-color);
+}
+
+input:checked + .slider:hover {
+    background-color: var(--secondary-color);
+}
+
    /* -----------new goal modal window */
 .new_goal_modal{
     font-family: var(--main-font);
@@ -212,7 +286,7 @@ header{
 }
 .progress_form_container li.current::before{
     background-color: var(--form-active-color);
-    box-shadow: 0 0 0 3px rgba(173, 255, 47, 0.45);
+    box-shadow: 0 0 0 3px var(--current-step-light);
     font-size: var(--font-size-sm);
 }
 .progress_form_container li.done::before{
@@ -832,7 +906,7 @@ header{
 .search.expanded{
     width: clamp(8rem, 15vw, 20rem) !important;
     cursor: default;
-    background-color: rgba(31,31,31,0.52);
+    background-color: var(--secondary-color-transparent);
     backdrop-filter: blur(20px);
 } 
 
@@ -883,7 +957,7 @@ header{
 .sort_window.open {
     width: clamp(12rem, 26vw,13.75rem); 
     height: clamp(13rem, 26vw,13.75rem);
-    background-color: rgba(31,31,31,0.52);
+    background-color: var(--secondary-color-transparent);
     backdrop-filter: blur(20px);
     cursor: default;
     z-index: 4;

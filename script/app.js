@@ -8,6 +8,7 @@ import "./ui/newGoalModal.js";
 import "./ui/search.js";
 import "./ui/search.js";
 import "./ui/sortBy.js";
+import "./ui/themeswitch.js";
 
 refreshUI();
 
