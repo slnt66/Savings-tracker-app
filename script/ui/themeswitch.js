@@ -2,7 +2,13 @@ const themeToggle = document.getElementById('themeToggle');
 
 const savedTheme = localStorage.getItem('theme');
 
-
+if (savedTheme === 'light') {
+    document.documentElement.classList.add('dark');
+    themeToggle.checked = true;
+} else {
+    document.documentElement.classList.remove('dark');
+    themeToggle.checked = false;
+}
 
 themeToggle.addEventListener('change', function() {
     if (this.checked) 
@@ -13,17 +19,6 @@ themeToggle.addEventListener('change', function() {
     document.documentElement.classList.toggle('dark');
     
 });
-// Функция для установки состояния переключателя
-function setToggleState(isLightTheme) {
-    themeToggle.checked = isLightTheme;
-}
 
-if (savedTheme === 'light') {
-    document.documentElement.classList.add('dark');
-    setToggleState(true);
-} else {
-    document.documentElement.classList.remove('dark');
-    setToggleState(false);
-}
 
 
