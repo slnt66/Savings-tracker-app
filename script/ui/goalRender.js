@@ -67,7 +67,7 @@ export function renderGoals(goals = GoalStorage.getAll()) {
     if(goals.length ===0){
         container.innerHTML = `
             <div class="empty_state">
-                <img src="../../static/images/not-found.svg">
+                <img src="<%= baseUrl %>static/images/not-found.svg">
                 No goals found
             </div>
         `;
